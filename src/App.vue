@@ -4,12 +4,15 @@
 
 <template>
   <div class="app">
-    <h2>
-      app
-    </h2>
+    <router-view></router-view>
   </div>
 </template>
 
 <style scoped>
-
+.app {
+  width: 100%;
+  height: 100%;
+  background-image: url("./assets/img/login_bc.png");
+  background-size: cover;
+}
 </style>
