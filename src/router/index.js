@@ -5,11 +5,28 @@ const router = createRouter({
   routes: [
     {
       path: "/",
-      redirect: "/home",
+      redirect: "/home/pageContent1",
     },
     {
       path: "/home",
       component: () => import("../views/Layout.vue"),
+      children: [
+        {
+          path: "pageContent1",
+          component: () =>
+            import("../components/page-content/PageContent1.vue"),
+        },
+        {
+          path: "pageContent2",
+          component: () =>
+            import("../components/page-content/PageContent2.vue"),
+        },
+        {
+          path: "pageContent3",
+          component: () =>
+            import("../components/page-content/PageContent3.vue"),
+        },
+      ],
     },
   ],
 });

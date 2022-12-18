@@ -1,24 +1,29 @@
-<script setup></script>
+<script setup>
+import AsideMenu from '@/components/aside-menu/AsideMenu.vue';
+import AreaMain from '@/components/area-main/AreaMain.vue'
+</script>
 
 <template>
     <el-container>
-      <el-aside width="300px">Aside</el-aside>
+      <el-aside width="300px">
+        <AsideMenu />
+      </el-aside>
       <el-container>
-        <el-header>Header</el-header>
-        <el-main>Main</el-main>
+        <el-main>
+          <AreaMain />
+        </el-main>
       </el-container>
     </el-container>
 </template>
 
 <style scoped>
 .el-container {
-  width: 100%;
+  width: 80%;
   height: 100%;
+  margin: 0 auto;
   color: aliceblue;
-  border: 1px solid white;
 }
 .el-aside,
-.el-header,
 .el-main{
   border: 1px solid white;
 }
