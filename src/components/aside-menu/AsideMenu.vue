@@ -12,12 +12,19 @@ const listData = [
   },
 ];
 
+// 点击title
 // const isActive = ref(false);
 const currentItem = ref(0);
 const router = useRouter();
 function handleTitleClick(index) {
   currentItem.value = index;
   router.push(`/home/pageContent${index+1}`)
+}
+
+// 新增click
+function handleCreateClick() {
+  console.log("createClick");
+
 }
 </script>
 
@@ -31,9 +38,9 @@ function handleTitleClick(index) {
       >
         <div class="flex items-center">
           <span class="mt-1">
-            <el-icon size="20">
-              <component :is="item.locked ? 'Lock' : 'Unlock'">
-                <Lock />
+            <el-icon size="15">
+              <component :is="item.locked ? 'More' : 'Lock'">
+                <!-- <Lock /> -->
               </component>
             </el-icon>
           </span>
@@ -43,7 +50,7 @@ function handleTitleClick(index) {
       </div>
     </template>
 
-    <div class="addBtn flex items-center text-sky-500 p-3">
+    <div class="addBtn flex items-center text-sky-500 p-3" @click="handleCreateClick">
       <el-icon><Plus /></el-icon>
       <span class="text-xl ml-4">新增</span>
     </div>
