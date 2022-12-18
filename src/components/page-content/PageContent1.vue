@@ -1,13 +1,15 @@
 <script setup>
 import { ref, reactive, computed } from "vue";
+import useTitleStore from "@/store";
 // import TodoItem from '../area-main/cpns/TodoItem.vue';
+const titleStore = useTitleStore();
+const { titleList } = titleStore;
 const props = defineProps({
   headerTitle: {
     type: String,
-    default: '星期一'
-  }
-})
-const emit = defineEmits(['countChange'])
+    default: "星期一",
+  },
+});
 
 let list = reactive([
   { title: "待办事项1", completed: false },
@@ -26,7 +28,7 @@ const count = computed(() => {
   }
   return completedNum;
 });
-emit('countChange',count)
+titleList[0].count = count
 
 // 回车点击新增
 const num = ref(4);
@@ -52,21 +54,20 @@ function handleDelete(title) {
 }
 
 // 全选
-const isAllSelect = ref(false)
+const isAllSelect = ref(false);
 function handleAllSelect() {
-
   if (isAllSelect.value === false) {
     for (const item of list) {
-      item.completed = true
+      item.completed = true;
     }
-    isAllSelect.value = true
+    isAllSelect.value = true;
   } else {
-    isAllSelect.value = false
+    isAllSelect.value = false;
   }
 }
 
 function handleAllDelete() {
-  list.splice(0)
+  list.splice(0);
 }
 </script>
 
@@ -103,14 +104,11 @@ function handleAllDelete() {
 
     <!-- 内容 -->
     <div class="content">
-
       <!-- 标题栏 -->
       <div class="flex items-center justify-between">
         <div @click="handleAllSelect">
           <el-icon>
-            <component
-                :is="isAllSelect ? 'Check' : 'FullScreen'"
-              ></component>
+            <component :is="isAllSelect ? 'Check' : 'FullScreen'"></component>
           </el-icon>
         </div>
         <div>待办事项标题</div>
@@ -128,7 +126,9 @@ function handleAllDelete() {
               ></component>
             </el-icon>
           </div>
-          <div :class="{ isCompleted: item.completed }" class=" p-3">{{ item.title }}</div>
+          <div :class="{ isCompleted: item.completed }" class="p-3">
+            {{ item.title }}
+          </div>
           <div @click="handleDelete(item.title)">
             <el-icon size="20"><Delete /></el-icon>
           </div>

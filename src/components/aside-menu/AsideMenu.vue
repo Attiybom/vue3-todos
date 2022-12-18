@@ -1,16 +1,11 @@
 <script setup>
-import { ref } from "vue";
-import { useRouter } from "vue-router"
-const listData = [
-  //模拟数据
-  { title: "星期一", count: 1, locked: true },
-  { title: "星期二", count: 2, locked: true },
-  {
-    title: "星期三",
-    count: 3,
-    locked: false,
-  },
-];
+import { ref, reactive } from "vue";
+import { useRouter } from "vue-router";
+import useTitleStore from "@/store/index"
+
+const titleStore = useTitleStore()
+const { titleList } = titleStore;
+const titleData = reactive(titleList);
 
 // 点击title
 // const isActive = ref(false);
@@ -18,19 +13,23 @@ const currentItem = ref(0);
 const router = useRouter();
 function handleTitleClick(index) {
   currentItem.value = index;
-  router.push(`/home/pageContent${index+1}`)
+  router.push(`/home/pageContent${index + 1}`);
 }
 
 // 新增click
 function handleCreateClick() {
   console.log("createClick");
-
+  titleList.push({
+    title: "新增测试",
+    count: 0,
+    locked: false,
+  });
 }
 </script>
 
 <template>
   <div class="aside-menu">
-    <template v-for="(item, index) in listData" :key="item.title">
+    <template v-for="(item, index) in titleData" :key="item.title">
       <div
         class="list flex items-center justify-between p-3"
         :class="{ active: currentItem === index }"
@@ -39,7 +38,7 @@ function handleCreateClick() {
         <div class="flex items-center">
           <span class="mt-1">
             <el-icon size="15">
-              <component :is="item.locked ? 'More' : 'Lock'">
+              <component :is="item.locked ? 'Lock' : 'More'">
                 <!-- <Lock /> -->
               </component>
             </el-icon>
@@ -50,7 +49,10 @@ function handleCreateClick() {
       </div>
     </template>
 
-    <div class="addBtn flex items-center text-sky-500 p-3" @click="handleCreateClick">
+    <div
+      class="addBtn flex items-center text-sky-500 p-3"
+      @click="handleCreateClick"
+    >
       <el-icon><Plus /></el-icon>
       <span class="text-xl ml-4">新增</span>
     </div>
